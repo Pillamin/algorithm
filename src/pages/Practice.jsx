@@ -101,13 +101,13 @@ const SlotNode = ({ node, slots, problem, handleShapeChange }) => {
         <div
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className={`w-[130px] h-[38px] flex items-center justify-center p-0.5 rounded-lg transition-colors shrink-0 ${
+          className={`relative w-[130px] h-[38px] flex items-center justify-center p-0.5 rounded-lg transition-colors shrink-0 ${
             snapshot.isDraggingOver ? 'bg-indigo-100 border-2 border-indigo-400' : 'border-2 border-dashed border-slate-300 bg-white/50'
           }`}
         >
           {!block && !snapshot.isDraggingOver && <span className="text-slate-400 text-[10px] font-medium select-none">여기에 드래그</span>}
           {block && (
-            <Draggable draggableId={node.id + '_drag'} index={0}>
+            <Draggable draggableId={block.id} index={0}>
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="w-full h-full flex items-center justify-center">
                   <RenderShape type={slotData.shape} text={block.text} onShapeChange={(s) => handleShapeChange(node.id, s)} />
@@ -115,7 +115,7 @@ const SlotNode = ({ node, slots, problem, handleShapeChange }) => {
               )}
             </Draggable>
           )}
-          <div className="hidden">{provided.placeholder}</div>
+          <div className="absolute inset-0 pointer-events-none opacity-0">{provided.placeholder}</div>
         </div>
       )}
     </Droppable>
